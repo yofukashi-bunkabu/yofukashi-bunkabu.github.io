@@ -16,7 +16,7 @@ Claude はアカウントやプロジェクトを作れないので、ここだ�
 ## 2. Google ログインを有効にする
 1. 左の「構築」→「Authentication」→「始める」
 2. 「Sign-in method」→「Google」→ 有効にする → プロジェクトのサポートメールを選んで保存
-3. 「Settings」→「承認済みドメイン」に `yofukashi-bunkabu.github.io` を追加
+3. 「Settings」→「承認済みドメイン」に `yofukashi-bunkabu.github.io` を追加（独自ドメインにしたら `yofukashi-bunkabu.com` と `www.yofukashi-bunkabu.com` も追加）
 
 ## 3. データベースを作る
 1. 「構築」→「Firestore Database」→「データベースの作成」

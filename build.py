@@ -370,6 +370,29 @@ def render_pages(ctx):
         page.write_text(s.replace("{{base}}", base), encoding="utf-8")
 
 
+def write_domain_files(cfg):
+    """公開先の URL（config.json の site_url）を各ページに入れ、CNAME・sitemap.xml・robots.txt を書く。"""
+    site = cfg["site_url"].rstrip("/") + "/"
+    urls = []
+    for page in sorted(OUT.rglob("*.html")):
+        s = page.read_text(encoding="utf-8")
+        if "{{site}}" in s:
+            s = s.replace("{{site}}", site)
+            page.write_text(s, encoding="utf-8")
+        if 'name="robots" content="noindex"' in s:
+            continue
+        rel = page.relative_to(OUT).as_posix()
+        urls.append(site + (rel[: -len("index.html")] if rel.endswith("index.html") else rel))
+    host = urllib.parse.urlparse(site).hostname
+    if not host.endswith(".github.io"):
+        (OUT / "CNAME").write_text(host + "\n", encoding="utf-8")
+    sm = ['<?xml version="1.0" encoding="UTF-8"?>', '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">']
+    sm += [f"  <url><loc>{esc(u)}</loc></url>" for u in urls]
+    sm.append("</urlset>")
+    (OUT / "sitemap.xml").write_text("\n".join(sm) + "\n", encoding="utf-8")
+    (OUT / "robots.txt").write_text(f"User-agent: *\nAllow: /\nSitemap: {site}sitemap.xml\n", encoding="utf-8")
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--today", help="YYYY-MM-DD（試すとき用）")
@@ -435,6 +458,7 @@ def main():
         out.parent.mkdir(parents=True, exist_ok=True)
         out.write_text(render_report(r, parts), encoding="utf-8")
     (OUT / "data.json").write_text(json.dumps(data, ensure_ascii=False, indent=1), encoding="utf-8")
+    write_domain_files(cfg)
     print(f"{today}: 次の会 {len(upcoming)}件／終わった会 {len(past)}件（開催 {held}回）／記事 {len(articles)}本 → {OUT}")
 
 

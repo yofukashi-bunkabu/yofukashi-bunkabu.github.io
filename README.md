@@ -2,7 +2,8 @@
 
 夜更文化部（よふかしぶんかぶ）の HP です。GitHub Pages で公開しています（2026-11-18 から。それまでは STUDIO に埋め込む「窓」だけのリポジトリ `hp-widget` でした）。
 
-- 公開先：https://yofukashi-bunkabu.github.io/
+- 公開先：https://yofukashi-bunkabu.com/ （独自ドメイン、2026-11-25 取得。旧 https://yofukashi-bunkabu.github.io/ は自動でこちらへ転送）
+  - 公開先の URL は `config.json` の `site_url` だけで決まる。ページ内では `{{site}}` と書くと build.py が置き換え、`CNAME`・`sitemap.xml`・`robots.txt` も書き出す
 - 更新：毎朝6時（日本時間）と、`main` に push したとき（GitHub Actions「窓を更新」）。会を公開して `data/events.json` に足すと、トップの「次の会」と「会の一覧」が自動で増える
 - 文章の正本：`../夜更文化部/HP/構成と文章_v2.md`（8段）。デザインは A「夜の縦組み」
 
@@ -65,7 +66,7 @@ python3 -m http.server 8765
 http://localhost:8765/_site/ でHP、http://localhost:8765/dev/test.html で窓を見る（`python3 build.py --today 2026-12-20` で日付を変えて試せる）。
 
 ## 夜更けの地図（site/map/、2026-11-18〜）
-参加者が、行った美術館・博物館の記録と口コミを地図に残すページ。公開先は https://yofukashi-bunkabu.github.io/map/
+参加者が、行った美術館・博物館の記録と口コミを地図に残すページ。公開先は https://yofukashi-bunkabu.com/map/
 - 地図は OpenStreetMap（Leaflet）。館の一覧は `site/map/venues.json`（イベント候補ダッシュボードの `venues` から、名前・種類・地域・緯度経度・公式URLだけを書き出したもの）
 - ログインと保存は Firebase（Google ログイン＋Firestore）。準備の手順は `FIREBASE.md`、守りは `firestore.rules`
 - `site/map/firebase-config.js` が空のあいだは試し表示（ログインはまねだけ、記録はその端末の中だけ）
