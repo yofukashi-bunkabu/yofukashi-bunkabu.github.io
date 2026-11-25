@@ -64,7 +64,8 @@
     "price": 500,
     "peatix": "https://peatix.com/event/5261286",
     "tunagate": "https://tunagate.com/circle/224201/events/640232",
-    "published": true
+    "published": true,
+    "canceled": true
   },
   {
     "id": "2026-11-29_shizou",
